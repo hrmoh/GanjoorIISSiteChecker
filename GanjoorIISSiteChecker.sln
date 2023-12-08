@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GanjoorIISSiteChecker", "GanjoorIISSiteChecker\GanjoorIISSiteChecker.csproj", "{97066792-A809-4C93-B749-38DA691BC486}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{97066792-A809-4C93-B749-38DA691BC486}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97066792-A809-4C93-B749-38DA691BC486}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97066792-A809-4C93-B749-38DA691BC486}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97066792-A809-4C93-B749-38DA691BC486}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {09E2DAB8-18EA-41BF-8461-E86B5EEE699A}
+	EndGlobalSection
+EndGlobal
