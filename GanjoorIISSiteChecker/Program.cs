@@ -7,7 +7,7 @@ class Program
         using (ServerManager serverManager = new ServerManager())
         {
             CheckSites(serverManager, "api.ganjoor.net", "api.ganjoor.net");
-            CheckSites(serverManager, "ganjoor.net", "ganjoor.net");
+            CheckSites(serverManager, "ganjoor", "ganjoor");
         }
     }
 
