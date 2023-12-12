@@ -8,6 +8,7 @@ class Program
         {
             CheckSites(serverManager, "api.ganjoor.net", "api.ganjoor.net");
             CheckSites(serverManager, "ganjoor", "ganjoor");
+            CheckSites(serverManager, "x-ganjgah.ir", "ganjgah.ir");
         }
     }
 
