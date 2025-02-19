@@ -1,40 +1,75 @@
-﻿using Microsoft.Web.Administration;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Web.Administration;
 
-class Program
+// Load configuration from appsettings.json
+var configuration = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json")
+    .Build();
+
+string[] sites = configuration.GetSection("Sites").Get<string[]>();
+string[] pools = configuration.GetSection("AppPools").Get<string[]>();
+
+using (ServerManager serverManager = new ServerManager())
 {
-    static void Main()
+    foreach (var site in sites)
     {
-        using (ServerManager serverManager = new ServerManager())
-        {
-            CheckSites(serverManager, "api.ganjoor.net", "api.ganjoor.net");
-            CheckSites(serverManager, "ganjoor", "ganjoor");
-            CheckSites(serverManager, "x-ganjgah.ir", "ganjgah.ir");
-        }
+        CheckSite(serverManager, site);
     }
 
-    static void CheckSites(ServerManager serverManager, string siteName, string appPoolName)
+    foreach (var pool in pools)
     {
-        Site site = serverManager.Sites[siteName];
-        ApplicationPool appPool = serverManager.ApplicationPools[appPoolName];
+        CheckPool(serverManager, pool);
+    }
 
-        if (site != null && site.State == ObjectState.Stopped)
-        {
-            site.Start();
-            Console.WriteLine($"Website '{siteName}' has been started.");
-        }
-        else
-        {
-            Console.WriteLine($"Website '{siteName}' is already running.");
-        }
+}
 
-        if (appPool != null && appPool.State == ObjectState.Stopped)
-        {
-            appPool.Start();
-            Console.WriteLine($"Application pool '{appPoolName}' has been started.");
-        }
-        else
-        {
-            Console.WriteLine($"Application pool '{appPoolName}' is already running.");
-        }
+string[] posts = configuration.GetSection("PostCalls").Get<string[]>();
+string[] gets = configuration.GetSection("GetCalls").Get<string[]>();
+
+using (HttpClient client = new HttpClient())
+{
+    foreach (var post in posts)
+    {
+        Console.WriteLine($"Checking {post}");
+        await client.PostAsync(post, null);
+    }
+    foreach (var get in gets)
+    {
+        Console.WriteLine($"Pinging {get}");
+        await client.GetAsync(get);
+
+    }
+}
+Console.WriteLine($"OK!");
+
+
+static void CheckSite(ServerManager serverManager, string siteName)
+{
+    Site site = serverManager.Sites[siteName];
+
+    if (site != null && site.State == ObjectState.Stopped)
+    {
+        site.Start();
+
+    }
+    else
+    {
+        Console.WriteLine($"Website '{siteName}' is already running.");
+    }
+}
+
+static void CheckPool(ServerManager serverManager, string appPoolName)
+{
+    ApplicationPool appPool = serverManager.ApplicationPools[appPoolName];
+
+    if (appPool != null && appPool.State == ObjectState.Stopped)
+    {
+        appPool.Start();
+        Console.WriteLine($"Application pool '{appPoolName}' has been started.");
+    }
+    else
+    {
+        Console.WriteLine($"Application pool '{appPoolName}' is already running.");
     }
 }
